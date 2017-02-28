@@ -5,7 +5,7 @@ if [ ! -e /tmp/pptp_oldgw ]; then
         exit 0
 fi
 
-ODLGW=$(cat /tmp/pptp_oldgw)
+OLDGW=$(cat /tmp/pptp_oldgw)
 
 route delete 1.0.1.0/24 "${OLDGW}"
 route delete 1.0.2.0/24 "${OLDGW}"
