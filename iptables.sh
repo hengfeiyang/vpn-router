@@ -3,7 +3,7 @@ export PATH="/bin:/sbin:/usr/sbin:/usr/bin"
 
 DEV="eth1"
 GWPrefix="192.168"
-SubNet="192.168.42.0/24"
+SubNet="192.168.12.0/24"
 
 IPSECGATEWAY=$(ip addr show $DEV| grep $GWPrefix | sed 's/.*inet *\([0-9.]*\).*/\1/')
 
