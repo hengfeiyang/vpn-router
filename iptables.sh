@@ -12,9 +12,11 @@ if [ -z "$IPSECGATEWAY" ]; then
 fi
 
 iptables -t nat --flush
+iptables -t nat -A POSTROUTING -s $SubNet -o $DEV -j SNAT --to-source $IPSECGATEWAY
 
 . ./iptables.rule
 
+iptables -t nat -D POSTROUTING -s $SubNet -o $DEV -j SNAT --to-source $IPSECGATEWAY
 iptables -t nat -A POSTROUTING -s $SubNet -o $DEV -j SNAT --to-source $IPSECGATEWAY
 
 # iptables -t nat -nvL --line-number
