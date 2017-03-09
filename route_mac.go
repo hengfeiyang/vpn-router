@@ -65,29 +65,16 @@ func main() {
 			continue
 		}
 		columns := strings.Split(string(line), "|")
-		ipColumns := strings.Split(columns[3], ".")
+		netaddr := columns[3]
 		ipcount, _ := strconv.Atoi(columns[4])
 
-		if ipcount == 16777216 {
-			router = append(router, fmt.Sprintf("%s/%d", strings.Join(ipColumns, "."), 8))
-			continue
-		}
-
-		netCount := ipcount / 256
 		i := 0
-		for netCount >= 256 {
-			ipColumnSecond, _ := strconv.Atoi(ipColumns[1])
-			router = append(router, fmt.Sprintf("%s.%d.%d.%d/%d", ipColumns[0], ipColumnSecond+i, 0, 0, 16))
-			netCount -= 256
+		n := 256
+		for ipcount > n {
+			n *= 2
 			i++
 		}
-		i = 0
-		for netCount > 0 {
-			ipColumnThree, _ := strconv.Atoi(ipColumns[2])
-			router = append(router, fmt.Sprintf("%s.%s.%d.%d/%d", ipColumns[0], ipColumns[1], ipColumnThree+i, 0, 24))
-			netCount--
-			i++
-		}
+		router = append(router, fmt.Sprintf("%s/%d", netaddr, 24-i))
 	}
 
 	err = writeRouter(router)
