@@ -13,13 +13,10 @@ fi
 
 iptables -t nat --flush
 iptables -t nat -A POSTROUTING -s $SubNet -o $DEV -j MASQUERADE
-#iptables -t nat -A POSTROUTING -s $SubNet -o $DEV -j SNAT --to-source $TUNGATEWAY
 
 . ./iptables.rule
 
 iptables -t nat -D POSTROUTING -s $SubNet -o $DEV -j MASQUERADE
 iptables -t nat -A POSTROUTING -s $SubNet -o $DEV -j MASQUERADE
-#iptables -t nat -D POSTROUTING -s $SubNet -o $DEV -j SNAT --to-source $TUNGATEWAY
-#iptables -t nat -A POSTROUTING -s $SubNet -o $DEV -j SNAT --to-source $TUNGATEWAY
 
 # iptables -t nat -nvL --line-number
