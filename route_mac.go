@@ -114,6 +114,28 @@ func writeRouter(router []string) error {
 		return err
 	}
 
+	// iptables IN
+	inData := make([]string, 0)
+	for i := range router {
+		inData = append(inData, fmt.Sprintf("iptables -t nat -A POSTROUTING -d %s -o $DEV -j MASQUERADE", router[i]))
+	}
+	inData = append(inData, "\n")
+	err = writeFile("IN/iptables.rule", []byte(strings.Join(inData, "\n")))
+	if err != nil {
+		return err
+	}
+
+	// iptables OUT
+	outData := make([]string, 0)
+	for i := range router {
+		outData = append(outData, fmt.Sprintf("iptables -t nat -A POSTROUTING -d %s -o $DEV -j SNAT --to-source $TUNGATEWAY", router[i]))
+	}
+	outData = append(outData, "\n")
+	err = writeFile("OUT/iptables.rule", []byte(strings.Join(outData, "\n")))
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
