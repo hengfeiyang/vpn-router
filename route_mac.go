@@ -61,7 +61,7 @@ func main() {
 			}
 			log.Fatalf("file readLine error: %v\n", err)
 		}
-		if strings.Contains(string(line), "CN|ipv4") == false {
+		if !strings.Contains(string(line), "CN|ipv4") {
 			continue
 		}
 		columns := strings.Split(string(line), "|")
