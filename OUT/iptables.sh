@@ -1,9 +1,9 @@
 #!/bin/sh
 export PATH="/bin:/sbin:/usr/sbin:/usr/bin"
 
-DEV="eth1"
-GWPrefix="192.168"
-SubNet="192.168.12.0/24"
+DEV="eth0"
+GWPrefix="10.88.80"
+SubNet="10.88.88.0/24"
 
 TUNGATEWAY=$(ip addr show $DEV| grep $GWPrefix | sed 's/.*inet *\([0-9.]*\).*/\1/')
 
